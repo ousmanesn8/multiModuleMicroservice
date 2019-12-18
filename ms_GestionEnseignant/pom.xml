@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>microservice_project</artifactId>
+        <groupId>ms.multiModule</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ms_GestionEnseignant</artifactId>
+    <packaging>jar</packaging>
+    <properties>
+        <dockerfile.version>1.4.1</dockerfile.version>
+    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.spotify</groupId>
+                <artifactId>dockerfile-maven-plugin</artifactId>
+                <version>1.4.3</version>
+                <executions>
+                    <execution>
+                        <id>default</id>
+                        <!--phase>install</phase-->
+                        <goals>
+                            <goal>build</goal>
+                            <!--goal>push</goal-->
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <repository>docker.io/ms_GestionEnseignant</repository>
+                    <tag>${project.version}</tag>
+                    <!--buildArgs>
+                        <JAR_FILE>target/ms_GestionEnseignant_docker_maven.jar</JAR_FILE>
+                    </buildArgs-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>2.2-beta-2</version>
+                <executions>
+                    <execution>
+                        <id>create-executable-jar</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                        <configuration>
+                            <descriptors>
+                                <descriptor>src/main/java/microservice/enseignant/ms_GestionEnseignant/Configuration/assembly.xml</descriptor>
+                            </descriptors>
+                            <archive>
+                                <manifest>
+                                    <mainClass>microservice.enseignant.ms_GestionEnseignant.MsGestionEnseignantApplication</mainClass>
+                                </manifest>
+                            </archive>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <!--finalName>ms_GestionEnseignant_docker_maven</finalName-->
+    </build>
+</project>
